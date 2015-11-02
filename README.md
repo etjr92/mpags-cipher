@@ -7,6 +7,8 @@ $ git clone <repourl> <localdir>
 Clones the project to my local directory
 ## Authors
 The course organisers made the repository, I am now editing it (Elliot R)
+## Package
+You should recieve a package and an executable
 # Documentation 2
 
 

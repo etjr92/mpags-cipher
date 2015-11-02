@@ -1,0 +1,4 @@
+#include <string>
+
+//! Transliterate char to string
+std::string transformChar(char c);

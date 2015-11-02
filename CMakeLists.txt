@@ -11,3 +11,37 @@ project(MPAGSCipher VERSION 0.1.0)
 #   running make as 'make VERBOSE=1'.
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+# - Don't allow C++ Compiler Vendor Extension
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# - Use our standard set of flags for the GNU/Clang compilers
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+  set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wfatal-errors -Wshadow -pedantic")
+endif()
+
+# - Declare te build of mpags.cipherr main program
+add_executable(mpags-cipher
+  mpags-cipher.cpp
+  MPAGSCipher/TransformChar.hpp
+  MPAGSCipher/TransformChar.cpp
+  MPAGSCipher/ProcessCommandLine.hpp
+  MPAGSCipher/ProcessCommandLine.cpp
+  MPAGSCipher/CaesarCipher.hpp
+  MPAGSCipher/CaesarCipher.cpp)
+
+target_include_directories(mpags-cipher
+  PRIVATE MPAGSCipher
+  )
+
+target_compile_features(mpags-cipher
+  PRIVATE cxx_auto_type cxx_range_for cxx_uniform_initialization
+  )
+
+# - Install mpags-cipher using UNIX/GNU directory structure
+include(GNUInstallDirs)
+install(TARGETS mpags-cipher DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+# - Package mpags-cipher binaries and source
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+include(CPack)
+

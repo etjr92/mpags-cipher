@@ -1,0 +1,10 @@
+#ifndef MPAGSCIPHER_CAESARCIPHER_HPP
+#define MPAGSCIPHER_CAESARCIPHER_HPP
+
+#include <iostream>
+#include <string>
+
+// Define the Caesar cipher
+void caesarCipher(bool decrypt, int key, std::string& code);
+
+#endif // MPAGSCIPHER_CAESARCIPHER_HPP
