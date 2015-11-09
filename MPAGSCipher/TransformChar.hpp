@@ -1,6 +1,7 @@
 #ifndef MPAGSCIPHER_TRANSFORMCHAR_HPP
 #define MPAGSCIPHER_TRANSFORMCHAR_HPP
 
+#include <iostream>
 #include <string>
 
 //! Transliterate char to string

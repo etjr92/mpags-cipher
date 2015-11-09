@@ -1,4 +1,4 @@
-#include <iostream>
+#include "TransformChar.hpp"
 
 std::string transformChar(char in_char) // Function which converts an input char to a string
 {

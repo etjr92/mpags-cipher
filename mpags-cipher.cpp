@@ -3,23 +3,26 @@
 #include <string>
 #include <fstream>
 
-// My project headers
+// My function headers
 #include "TransformChar.hpp"
 #include "ProcessCommandLine.hpp"
 #include "CaesarCipher.hpp"
 
 int main(int argc, char *argv[])
 {
-  std::string input_file_name {""};
-  std::string output_file_name {""};
-  bool decrypt {false};
-  long key {0};
-  processCommandLine(argc,argv,input_file_name,output_file_name,decrypt,key);
+  //std::string input_file_name {""};
+  //std::string output_file_name {""};
+  //bool decrypt {false};
+  //int key {0};
+  Command_line command_line {"","",CipherMode::encrypt,0};
+  //processCommandLine(argc,argv,input_file_name,output_file_name,decrypt,key);
+  processCommandLine(argc,argv,command_line);
+  
   
   std::string in{""};
   char in_char{'x'};
 
-  if(input_file_name == "")
+  if(command_line.input_filename == "")
     {
       while(std::cin >> in_char) // Builds output from input
 	{
@@ -29,30 +32,33 @@ int main(int argc, char *argv[])
   else
     {
       // Read input from file
-      std::ifstream in_file {input_file_name};
-      bool ok_to_read = in_file.good();
-      if(ok_to_read == true)
+      std::ifstream in_file {command_line.input_filename};
+      if(in_file.good())
 	{
 	  while(in_file >> in_char) // Builds output from input
 	    {
 	      in += transformChar(in_char);
 	    }
 	}
-      else std::cout<<"ERROR READING INPUT FILE!!!"<<std::endl;
+      else
+	{
+	  std::cout<<"ERROR READING INPUT FILE!!!"<<std::endl;
+	  return 1;
+	}
       in_file.close();
     }
 
-  caesarCipher(decrypt, key, in);
+  CaesarCipher cipher{command_line.key};
+  cipher.caesarCipher(command_line.mode, in);
 
-  if(output_file_name == "")
+  if(command_line.output_filename == "")
     {
       std::cout<<in<<std::endl; // Outputs desired output
     }
   else
     {
-      std::ofstream out_file {output_file_name};
-      bool ok_to_write = out_file.good();
-      if(ok_to_write == true) out_file << in;
+      std::ofstream out_file {command_line.output_filename};
+      if(out_file.good()) out_file << in;
       else std::cout<<"ERROR WRITING TO OUTPUT FILE!!!"<<std::endl;
       out_file.close();
     }
