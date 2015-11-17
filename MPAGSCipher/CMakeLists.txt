@@ -6,6 +6,8 @@ message("Hi Elliot")
 # - Declare the build of the static MPAGSCipher library
 add_library(MPAGSCipher STATIC
   CaesarCipher.hpp
+  PlayfairCipher.cpp
+  PlayfairCipher.hpp
   CaesarCipher.cpp
   ProcessCommandLine.hpp
   ProcessCommandLine.cpp

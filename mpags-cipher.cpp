@@ -7,15 +7,11 @@
 #include "TransformChar.hpp"
 #include "ProcessCommandLine.hpp"
 #include "CaesarCipher.hpp"
+#include "PlayfairCipher.hpp"
 
 int main(int argc, char *argv[])
 {
-  //std::string input_file_name {""};
-  //std::string output_file_name {""};
-  //bool decrypt {false};
-  //int key {0};
-  Command_line command_line {"","",CipherMode::encrypt,0};
-  //processCommandLine(argc,argv,input_file_name,output_file_name,decrypt,key);
+  Command_line command_line {"","",CipherMode::encrypt,"",""};
   processCommandLine(argc,argv,command_line);
   
   
@@ -47,9 +43,18 @@ int main(int argc, char *argv[])
 	}
       in_file.close();
     }
+  
+  if(command_line.cipher_type == "caesar")
+    {
+      CaesarCipher cipher{command_line.key};
+      cipher.caesarCipher(command_line.mode, in);
+    }
 
-  CaesarCipher cipher{command_line.key};
-  cipher.caesarCipher(command_line.mode, in);
+  if(command_line.cipher_type == "playfair")
+    {
+      PlayfairCipher cipher{command_line.key};
+      in = cipher.encrypt(in);
+    }
 
   if(command_line.output_filename == "")
     {

@@ -15,7 +15,8 @@ struct Command_line
   std::string input_filename;
   std::string output_filename;
   CipherMode mode;
-  int key;
+  std::string key;
+  std::string cipher_type;
 };
 
 //! Transliterate char to string

@@ -5,7 +5,7 @@ void processCommandLine(int argc, char *argv[], Command_line& command_line)
 {
   for(int i=0; i<argc; i++) // Acts on command line arguments
     {
-      const std::string argument {argv[i]};
+      std::string argument {argv[i]};
       if(argument == "-h" || argument == "--help")
 	{
 	  std::cout << "Use -k to add key and -d to switch to decrypt mode." << std::endl;
@@ -34,7 +34,21 @@ void processCommandLine(int argc, char *argv[], Command_line& command_line)
       if(argument == "-k" || argument == "--key")
 	{
 	  i++;
-	  command_line.key = std::stoi(argv[i]);
+	  command_line.key = argv[i];
+	  continue;
+	}
+      if(argument == "--cipher" || argument == "-c")
+	{
+	  i++;
+	  argument = argv[i];
+	  if(argument == "caesar" || argument == "playfair")
+	    {
+	      command_line.cipher_type = argv[i];
+	    }
+	  else
+	    {
+	      return;
+	    }
 	  continue;
 	}
     }
